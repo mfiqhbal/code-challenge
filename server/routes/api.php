@@ -6,3 +6,5 @@ use App\Http\Controllers\StudentUploadController;
 
 Route::post('/upload', [StudentUploadController::class, 'upload']);
 Route::get('/students', [StudentUploadController::class, 'index']);
+Route::get('/classes', [StudentUploadController::class, 'getAllClasses']);
+Route::get('/students/class/{class}', [StudentUploadController::class, 'getStudentsByClass']);

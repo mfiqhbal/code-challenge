@@ -27,4 +27,20 @@ class StudentUploadController extends Controller
         $students = Student::all(); 
         return response()->json($students, 200);
     }
+
+    public function getAllClasses()
+    {
+        $classes = Student::distinct()->pluck('class');
+        return response()->json($classes, 200);
+    }
+
+    public function getStudentsByClass($class)
+    {
+        if ($class == 'all') {
+            $students = Student::all();
+        } else {
+            $students = Student::where('class', $class)->get();
+        }
+        return response()->json($students, 200);
+    }
 }
