@@ -1,30 +1,68 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+      <form @submit.prevent="uploadFile">
+          <input type="file" @change="onFileChange" />
+          <button type="submit">Upload</button>
+      </form>
+      <div v-if="students.length > 0">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Level</th>
+                      <th>Class</th>
+                      <th>Parent Contact</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="student in students" :key="student.id">
+                      <td>{{ student.name }}</td>
+                      <td>{{ student.level }}</td>
+                      <td>{{ student.class }}</td>
+                      <td>{{ student.parent_contact }}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+      return {
+          file: null,
+          students: [
+            {
+              name: 'student name',
+              level: '1',
+              class: 'berlian',
+              parent_contact: '0123456789',
+            }
+          ],
+      };
+  },
+  methods: {
+      onFileChange(e) {
+          this.file = e.target.files[0];
+      },
+      async uploadFile() {
+          let formData = new FormData();
+          formData.append('file', this.file);
+
+          try {
+              const response = await axios.post('/api/upload', formData, {
+                  headers: {
+                      'Content-Type': 'multipart/form-data'
+                  }
+              });
+              this.students = response.data;
+          } catch (error) {
+              console.error('Error uploading file:', error);
+          }
+      }
+  }
+};
+</script>
