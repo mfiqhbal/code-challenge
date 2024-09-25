@@ -5,3 +5,4 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentUploadController;
 
 Route::post('/upload', [StudentUploadController::class, 'upload']);
+Route::get('/students', [StudentUploadController::class, 'index']);

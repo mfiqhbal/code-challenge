@@ -21,4 +21,10 @@ class StudentUploadController extends Controller
 
         return response()->json(['message' => 'Upload successful'], 200);
     }
+
+    public function index()
+    {
+        $students = Student::all(); 
+        return response()->json($students, 200);
+    }
 }
