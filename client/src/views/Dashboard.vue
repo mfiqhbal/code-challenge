@@ -72,7 +72,6 @@
                                             <th>Level</th>
                                             <th>Class</th>
                                             <th>Parent Contact</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
