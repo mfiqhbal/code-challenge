@@ -3,6 +3,7 @@ import Login from '../views/Login.vue';
 import Dashboard from '../views/Dashboard.vue';
 import auth from "../middleware/auth";
 import guest from "../middleware/guest";
+import Layout from '../components/Layout.vue';
 
 const routes = [
     { 
@@ -14,12 +15,18 @@ const routes = [
         }
     },
     { 
-        path: '/dashboard', 
+        path: '/', 
         name: 'Dashboard', 
-        component: Dashboard, 
-        meta: {
-            middleware: [auth],
-        }
+        component: Layout,
+        children: [ 
+            {
+                path: '/dashboard',
+                component: Dashboard,
+                meta: {
+                    middleware: [auth],
+                }
+            }
+        ]
     },
 ];
 

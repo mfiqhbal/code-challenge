@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto">
+    <div class="mx-auto mt-4">
         <div class="flex justify-center">
             <div class="w-full max-w-lg">
                 <div class="card bg-white shadow-md rounded-lg p-4" style="max-width: 800px;">
@@ -9,20 +9,26 @@
                                 <div v-if="alert.message" :class="alert.type" class="alert">
                                     {{ alert.message }}
                                 </div>
-                                <label for="fileInput" class="form-label text-lg font-semibold ml-4 text-blue-500">Upload From File</label>
+                                <label for="fileInput" class="form-label text-lg font-semibold  text-grey-700">Upload From File</label>
                                 <div class="mb-2">
                                     <a href="/sample-template.xlsx" class="text-blue-600" download>Download Excel Template</a>  
                                 </div>
-                                <input
-                                    class="form-control flex justify-center items-center h-10 bg-gray-100 border rounded"
-                                    type="file"
-                                    id="fileInput"
-                                    @change="handleFileUpload"
-                                />
+                                <div class="flex items-center justify-left">
+                                    <input
+                                        class="file:mr-4 file:py-2 file:px-4
+                                        file:rounded-full file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-violet-50 file:text-violet-700
+                                        hover:file:bg-violet-100"
+                                        type="file"
+                                        id="fileInput"
+                                        @change="handleFileUpload"
+                                    />
+                                </div>
                                 <div v-if="errors.file" class="mt-1 text-red-500">{{ errors.file }}</div>
                             </div>
-                            <div class="mt-4 mb-4 flex justify-between">
-                                <button type="submit" class="btn btn-primary border border-blue-600 text-blue-600 py-1 px-4 rounded-lg text-sm">Upload</button>
+                            <div class="mt-4 mb-4 flex justify-start">
+                                <button type="submit" class="btn btn-primary border border-blue-600 text-blue-600 py-1 mr-2 px-4 rounded-lg text-sm">Upload</button>
                                 <button type="button" class="btn btn-danger border border-red-600 text-red-600 py-1 px-4 rounded-lg text-sm" @click="cancelUpload">Cancel</button>
                             </div>
                         </form>
@@ -61,27 +67,26 @@
                         <div class="card-body">
                             <p v-if="!students.length">No student found.</p>
                             <div v-else>
-                                <table class="table-auto w-full text-left">
+                                <table class="table-auto w-full text-left border border-collapse border-gray-200">
                                     <caption class="mb-2 text-lg font-semibold">
                                         List of {{ totalStudents }} students
                                     </caption>
-                                    <thead>
+                                    <thead class="bg-gray-100">
                                         <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Level</th>
-                                            <th>Class</th>
-                                            <th>Parent Contact</th>
+                                            <th class="px-4 py-2">#</th>
+                                            <th class="px-4 py-2">Name</th>
+                                            <th class="px-4 py-2">Level</th>
+                                            <th class="px-4 py-2">Class</th>
+                                            <th class="px-4 py-2">Parent Contact</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(student, index) in paginatedStudents" :key="student.id">
-                                            <td>{{ index + 1 }}</td>
-                                            <td>{{ student.name }}</td>
-                                            <td>{{ student.level }}</td>
-                                            <td>{{ student.class }}</td>
-                                            <td>{{ student.parent_contact }}</td>
-                                            <td></td>
+                                        <tr v-for="(student, index) in paginatedStudents" :key="student.id" class="hover:bg-gray-100">
+                                            <td class="px-4 py-2">{{ index + 1 }}</td>
+                                            <td class="px-4 py-2">{{ student.name }}</td>
+                                            <td class="px-4 py-2">{{ student.level }}</td>
+                                            <td class="px-4 py-2">{{ student.class }}</td>
+                                            <td class="px-4 py-2">{{ student.parent_contact }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
