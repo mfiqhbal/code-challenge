@@ -100,9 +100,14 @@
 <script>
 import axios from 'axios';
 import Pagination from '../components/Pagination.vue';
+import { useToast } from "vue-toastification";
 
 export default {
     components: { Pagination },
+    setup() {
+        const toast = useToast();
+        return { toast };
+    },
     data() {
         return {
             alert: { message: null, type: null },
@@ -123,6 +128,12 @@ export default {
             this.file = e.target.files[0];
         },
         async uploadFile() {
+            if (!this.file) {
+                this.errors.file = 'Please select a file to upload.';
+                this.toast.error(this.errors.file); // Show error toast
+                return;
+            }
+
             let formData = new FormData();
             formData.append('file', this.file);
 
@@ -134,9 +145,11 @@ export default {
                 this.totalStudents = this.students.length;
                 this.fetchClasses();
                 this.fetchStudents();
-                window.location.reload();
+                this.toast.success('File uploaded successfully!'); // Show success toast
+                // window.location.reload();
             } catch (error) {
                 console.error('Error uploading file:', error);
+                this.toast.error('Error uploading file. Please try again.'); // Show error toast
             }
         },
         async fetchClasses() {

@@ -16,10 +16,14 @@ class StudentUploadController extends Controller
             'file' => 'required|mimes:xlsx,xls'
         ]);
 
-        // Import the Excel data
-        Excel::import(new StudentsImport, $request->file('file'));
-
-        return response()->json(['message' => 'Upload successful'], 200);
+        try {
+            // Import the Excel data
+            Excel::import(new StudentsImport, $request->file('file'));
+            return response()->json(['message' => 'Upload successful'], 200);
+        } catch (\Exception $e) {
+            // Handle the exception
+            return response()->json(['message' => 'Upload failed: ' . $e->getMessage()], 500);
+        }
     }
 
     public function index()
