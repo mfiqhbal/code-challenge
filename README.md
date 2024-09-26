@@ -14,8 +14,8 @@ A Laravel-based project with authentication using Laravel Passport.
 - cd server
 - Create `.env` file, based on `.env.example` file
 - Run `composer install`
-- Run `php artisan passport:install`
 - Run `php artisan migrate`
+- Run `php artisan install:api --passport`
 - Run `php artisan db:seed`
 - Run `php artisan serve`
 - Open new terminal 
