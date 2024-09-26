@@ -143,8 +143,12 @@ export default {
             formData.append('file', this.file);
 
             try {
+                const token = localStorage.getItem('token'); // Get token from local storage
                 const response = await axios.post('/api/upload', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    headers: { 
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}` // Add Bearer token
+                    }
                 });
                 this.students = response.data;
                 this.totalStudents = this.students.length;
@@ -158,11 +162,17 @@ export default {
             }
         },
         async fetchClasses() {
-            const response = await axios.get('/api/classes');
+            const token = localStorage.getItem('token'); // Get token from local storage
+            const response = await axios.get('/api/classes', {
+                headers: { 'Authorization': `Bearer ${token}` } // Add Bearer token
+            });
             this.classes = response.data;
         },
         async fetchStudents(page = 1) {
-            const response = await axios.get(`/api/students/class/${this.selectedClass}`);
+            const token = localStorage.getItem('token'); // Get token from local storage
+            const response = await axios.get(`/api/students/class/${this.selectedClass}`, {
+                headers: { 'Authorization': `Bearer ${token}` } // Add Bearer token
+            });
             this.students = response.data;
             this.totalStudents = this.students.length;
             this.currentPage = page;
